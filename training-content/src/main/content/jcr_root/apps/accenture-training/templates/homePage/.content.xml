@@ -6,5 +6,5 @@
     ranking="{Long}100">
     <jcr:content
         jcr:primaryType="cq:PageContent"
-        sling:resourceType="homePage"/>
+        sling:resourceType="accenture-training/components/templates/homePage"/>
 </jcr:root>
