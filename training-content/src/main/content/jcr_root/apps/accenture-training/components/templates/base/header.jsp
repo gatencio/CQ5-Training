@@ -5,6 +5,9 @@
 	pageContext.setAttribute("nav", nav);
 %>
 <header class="header">
+
+<cq:include path="logoImage" resourceType="accenture-training/components/logoImage"/>
+
     <c:forEach var="page" items="${nav.childrenList}">
     	<nav>
     		<a href="${page.url}.html">${page.title}</a>
