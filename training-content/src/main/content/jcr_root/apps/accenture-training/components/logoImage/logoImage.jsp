@@ -21,7 +21,7 @@
     com.day.cq.wcm.foundation.Image" %>
     <%@include file="/libs/foundation/global.jsp"%>
   <%
-    //Obtenemos el resource del diseno
+    //Obtenemos el resource del disenho
 	Resource re = currentStyle.getDefiningResource("fileReference");
 	 String divId = "imagen";
 	if(re == null){

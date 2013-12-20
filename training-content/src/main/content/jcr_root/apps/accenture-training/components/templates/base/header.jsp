@@ -1,7 +1,7 @@
 <%@ include file="/libs/foundation/global.jsp" %>
-<%@page import="com.accenture.cq5.HomePage" %>
+<%@page import="com.accenture.cq5.BasePage" %>
 <%
-	HomePage nav = new HomePage(currentPage, currentStyle);
+	BasePage nav = new BasePage(currentPage, currentStyle);
 	pageContext.setAttribute("nav", nav);
 %>
 <header class="header">

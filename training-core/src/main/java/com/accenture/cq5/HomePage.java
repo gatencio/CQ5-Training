@@ -4,60 +4,42 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.sling.api.resource.ValueMap;
+
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.designer.Style;
 
-public class HomePage {
+public class HomePage extends BasePage {
 
-	private List<NavigationPage> childrenList; 
-	private String imagePath;
+	private static final String SITE_MAP ="sitemap";
 	
-	public HomePage(Page pCurrentPage, Style pCurrentStyle)
-	{
-		childrenList = generateNavPages(pCurrentPage);
+	public HomePage(Page pCurrentPage, Style pCurrentStyle,  ValueMap pProperties){
+		super();
 		
-		if(pCurrentStyle != null){
-			setImagePath(pCurrentStyle.get("imagePath","path")); 
-		}
+		super.setChildrenList(generateFooterNavPages(pCurrentPage, pProperties));
 	}
 	
-	/**
-	 * Genera la lista de paginas que apareceran en el menu de navegación
-	 * @param pCurrentPage Pagina padre de todas las paginas navegables
-	 * @return Lista de paginas. En caso de que el padre sea null la lista estara vacía
-	 */
-	private List<NavigationPage> generateNavPages(Page pCurrentPage){
-		
+	private List<NavigationPage> generateFooterNavPages(Page pCurrentPage, ValueMap pProperties){
 		List<NavigationPage> result = new ArrayList<NavigationPage>();
 		
 		if(pCurrentPage != null){
-			Iterator<Page> children = pCurrentPage.listChildren();
-			
-			while (children.hasNext()) {
-                Page child = children.next();
-                if (!pCurrentPage.equals(child)) {
-                        NavigationPage np = new NavigationPage(child);
-                        result.add(np);
-                }
+			Object siteMapPathr = pProperties.get(SITE_MAP);  
+			if(siteMapPathr != null){
+				String siteMapPath =siteMapPathr.toString();
+				Page siteMap = pCurrentPage.getPageManager().getPage(siteMapPath);
+				
+				Iterator<Page> children = siteMap.listChildren();
+				
+				while(children.hasNext()){
+					
+					Page child = children.next();
+	                
+	                NavigationPage np = new NavigationPage(child);
+	                result.add(np);
+				}
 			}
 		}
 		
 		return result;
-	}
-	
-	public List<NavigationPage> getChildrenList() {
-		return childrenList;
-	}
-	
-	public void setChildrenList(List<NavigationPage> childrenList) {
-		this.childrenList = childrenList;
-	}
-
-	public String getImagePath() {
-		return imagePath;
-	}
-
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
 	}
 }
